@@ -2,7 +2,7 @@
 import React from 'react';
 import { Song } from '@/data/songs';
 import { formatTime } from '@/utils/formatTime';
-import { Heart, X, Headphones } from 'lucide-react';
+import { Heart, X, Play, Music3 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface SongCardProps {
@@ -96,7 +96,7 @@ const SongCard: React.FC<SongCardProps> = ({
       onMouseUp={handleTouchEnd}
       onMouseLeave={handleTouchEnd}
     >
-      {/* Left indicator (Skip) */}
+      {/* Swipe indicators */}
       <div 
         className={`swipe-indicator left-4 ${direction === 'left' ? 'opacity-100' : ''}`}
         style={{ opacity: direction === 'left' ? Math.min(Math.abs(offsetX) / 100, 1) : 0 }}
@@ -104,54 +104,64 @@ const SongCard: React.FC<SongCardProps> = ({
         <X className="text-white" size={32} />
       </div>
       
-      {/* Right indicator (Like) */}
       <div 
         className={`swipe-indicator right-4 ${direction === 'right' ? 'opacity-100' : ''}`}
         style={{ opacity: direction === 'right' ? Math.min(Math.abs(offsetX) / 100, 1) : 0 }}
       >
-        <Heart className="text-accent" fill="#ff6b95" size={32} />
+        <Heart className="text-primary" fill="currentColor" size={32} />
       </div>
       
       {/* Album artwork */}
-      <div className="w-full aspect-square bg-gray-900 overflow-hidden">
+      <div className="w-full aspect-square bg-black overflow-hidden relative">
         <img 
           src={song.coverArt} 
           alt={`${song.title} cover`} 
           className="w-full h-full object-cover"
         />
+        <div className="album-overlay"></div>
+        
+        {/* Spotify-like play button overlay */}
+        {isActive && (
+          <div className="absolute bottom-6 right-6">
+            <div className="bg-primary rounded-full p-3 shadow-xl hover:scale-105 transition-transform">
+              <Play fill="black" size={24} className="text-black ml-0.5" />
+            </div>
+          </div>
+        )}
       </div>
       
       {/* Song info */}
-      <div className="absolute bottom-0 left-0 right-0 p-6 neo-blur">
-        <div className="flex items-center justify-between">
-          <div>
+      <div className="absolute bottom-0 left-0 right-0 p-5 neo-blur">
+        <div className="flex items-center justify-between mb-2">
+          <div className="flex-1 pr-4">
             <h2 className="text-xl font-bold text-white mb-1 truncate">{song.title}</h2>
-            <p className="text-base text-gray-300 mb-1">{song.artist}</p>
+            <p className="text-base text-gray-300 mb-1 truncate">{song.artist}</p>
+            <div className="flex items-center mt-1">
+              <Music3 size={14} className="text-primary mr-2" />
+              <span className="text-xs text-gray-400 truncate">{song.album}</span>
+            </div>
           </div>
-          <div className="flex-shrink-0 bg-primary/20 rounded-full p-2">
-            <Headphones size={20} className="text-primary" />
+          <div className="text-right">
+            <span className="text-xs text-gray-400 block">{formatTime(song.duration)}</span>
           </div>
-        </div>
-        
-        <div className="flex justify-between items-center mt-2 text-gray-400 text-sm">
-          <span>{song.album}</span>
-          <span>{formatTime(song.duration)}</span>
         </div>
       </div>
       
       {/* Action buttons */}
       {isActive && (
-        <div className="absolute bottom-36 left-0 right-0 flex justify-center space-x-12 py-4">
+        <div className="absolute top-1/2 left-0 right-0 flex justify-center space-x-12 py-4">
           <button 
             onClick={() => handleActionButton('left')}
-            className="glass hover:bg-white/20 text-white p-4 rounded-full transition-colors"
+            className="glass hover:bg-white/10 text-white p-4 rounded-full transition-colors shadow-lg"
+            aria-label="Skip"
           >
             <X size={28} />
           </button>
           
           <button 
             onClick={() => handleActionButton('right')}
-            className="glass hover:bg-white/20 text-accent p-4 rounded-full transition-colors"
+            className="glass hover:bg-white/10 text-primary p-4 rounded-full transition-colors shadow-lg"
+            aria-label="Like"
           >
             <Heart size={28} />
           </button>

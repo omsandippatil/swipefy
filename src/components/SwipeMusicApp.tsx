@@ -5,7 +5,7 @@ import MusicPlayer from './MusicPlayer';
 import { songs, Song } from '@/data/songs';
 import { useToast } from '@/components/ui/use-toast';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { Heart, User, LayoutGrid, Settings } from 'lucide-react';
+import { Heart, User, Search, Mic2, Home } from 'lucide-react';
 
 const SwipeMusicApp: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -57,18 +57,18 @@ const SwipeMusicApp: React.FC = () => {
   };
   
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted flex flex-col">
+    <div className="min-h-screen bg-gradient-to-br from-background via-background to-black flex flex-col">
       <header className="pt-6 pb-4 px-4 glass border-b border-white/10">
         <div className="flex items-center justify-between max-w-md mx-auto">
           <h1 className="text-2xl font-bold text-white">
             <span className="text-gradient">Swipe</span>
-            <span className="text-primary">fy</span>
+            <span className="text-white">fy</span>
           </h1>
           <div className="flex gap-4">
-            <button className="text-white/70 hover:text-white transition-colors">
+            <button className="text-white/70 hover:text-primary transition-colors">
               <Heart size={20} />
             </button>
-            <button className="text-white/70 hover:text-white transition-colors">
+            <button className="text-white/70 hover:text-primary transition-colors">
               <User size={20} />
             </button>
           </div>
@@ -79,7 +79,11 @@ const SwipeMusicApp: React.FC = () => {
         <div className={`w-full ${isMobile ? 'max-w-[90vw]' : 'max-w-md'} aspect-[3/4] relative`}>
           {songs.map((song, index) => {
             // Only render current card and next one for performance
-            if (index < currentIndex || index > currentIndex + 1) return null;
+            if (index < currentIndex || index > currentIndex + 2) return null;
+            
+            // Calculate staggered layout for stacked cards
+            const isNext = index === currentIndex + 1;
+            const isNextAfter = index === currentIndex + 2;
             
             return (
               <div 
@@ -91,8 +95,15 @@ const SwipeMusicApp: React.FC = () => {
                       : transitionDirection === 'right'
                         ? 'card-rotate-right'
                         : ''
-                    : 'scale-95 -translate-y-4 opacity-80'
+                    : isNext
+                      ? 'scale-[0.95] -translate-y-4 opacity-90'
+                      : isNextAfter
+                        ? 'scale-[0.9] -translate-y-8 opacity-80'
+                        : ''
                 }`}
+                style={{
+                  zIndex: songs.length - index
+                }}
               >
                 <SongCard
                   song={song}
@@ -106,9 +117,11 @@ const SwipeMusicApp: React.FC = () => {
           })}
         </div>
         
-        <p className="text-white/60 text-sm mt-8 text-center max-w-xs">
-          Swipe right to add to favorites, or left to skip
-        </p>
+        <div className="text-white/60 text-sm mt-8 text-center max-w-xs flex items-center justify-center gap-1">
+          <div className="h-0.5 w-5 bg-primary/50 rounded-full"></div>
+          <p>Swipe right to like, left to skip</p>
+          <div className="h-0.5 w-5 bg-primary/50 rounded-full"></div>
+        </div>
       </main>
       
       <MusicPlayer
@@ -122,17 +135,21 @@ const SwipeMusicApp: React.FC = () => {
       {isMobile && (
         <nav className="fixed bottom-20 left-0 right-0 glass border-t border-white/10 py-3 px-6 z-10">
           <div className="flex justify-around items-center">
+            <button className="flex flex-col items-center text-white hover:text-primary transition-colors">
+              <Home size={20} />
+              <span className="text-xs mt-1">Home</span>
+            </button>
+            <button className="flex flex-col items-center text-white/70 hover:text-primary transition-colors">
+              <Search size={20} />
+              <span className="text-xs mt-1">Search</span>
+            </button>
             <button className="flex flex-col items-center text-white/70 hover:text-primary transition-colors">
               <Heart size={20} />
-              <span className="text-xs mt-1">Favorites</span>
+              <span className="text-xs mt-1">Liked</span>
             </button>
             <button className="flex flex-col items-center text-white/70 hover:text-primary transition-colors">
-              <LayoutGrid size={20} />
-              <span className="text-xs mt-1">Library</span>
-            </button>
-            <button className="flex flex-col items-center text-white/70 hover:text-primary transition-colors">
-              <Settings size={20} />
-              <span className="text-xs mt-1">Settings</span>
+              <Mic2 size={20} />
+              <span className="text-xs mt-1">Now Playing</span>
             </button>
           </div>
         </nav>

@@ -5,33 +5,33 @@
 
 @layer base {
   :root {
-    --background: 260 20% 10%;
+    --background: 220 10% 10%;
     --foreground: 0 0% 98%;
 
-    --card: 260 15% 15%;
+    --card: 220 10% 15%;
     --card-foreground: 0 0% 98%;
 
-    --popover: 260 15% 15%;
+    --popover: 220 10% 15%;
     --popover-foreground: 0 0% 98%;
 
-    --primary: 252 87% 70%;
+    --primary: 142 72% 50%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 283 39% 45%;
+    --secondary: 220 10% 20%;
     --secondary-foreground: 0 0% 98%;
 
-    --muted: 260 15% 20%;
-    --muted-foreground: 260 5% 65%;
+    --muted: 220 10% 20%;
+    --muted-foreground: 220 5% 65%;
 
-    --accent: 331 74% 70%;
+    --accent: 142 72% 50%;
     --accent-foreground: 0 0% 98%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 260 15% 20%;
-    --input: 260 15% 20%;
-    --ring: 260 60% 70%;
+    --border: 220 10% 20%;
+    --input: 220 10% 20%;
+    --ring: 142 72% 60%;
 
     --radius: 0.75rem;
   }
@@ -42,30 +42,30 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground overflow-hidden;
+    @apply bg-gradient-to-br from-background via-background to-black text-foreground overflow-hidden;
     font-feature-settings: "rlig" 1, "calt" 1;
   }
 }
 
 @layer utilities {
   .music-card-shadow {
-    box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.4);
   }
   
   .glass {
-    @apply bg-white/10 backdrop-blur-md;
+    @apply bg-white/5 backdrop-blur-md border border-white/10;
   }
   
   .neo-blur {
-    @apply backdrop-blur-2xl bg-black/40 border border-white/10;
+    @apply backdrop-blur-2xl bg-black/50 border border-white/10;
   }
   
   .text-gradient {
-    @apply bg-gradient-to-br from-white via-white/90 to-white/70 bg-clip-text text-transparent;
+    @apply bg-gradient-to-br from-primary to-primary/70 bg-clip-text text-transparent;
   }
   
   .swipe-indicator {
-    @apply absolute top-1/2 transform -translate-y-1/2 p-4 rounded-full bg-white/20 backdrop-blur-lg text-white text-xl font-bold;
+    @apply absolute top-1/2 transform -translate-y-1/2 p-4 rounded-full bg-black/60 backdrop-blur-lg text-white text-xl font-bold;
     opacity: 0;
     transition: opacity 0.2s ease-in-out;
   }
@@ -80,6 +80,18 @@
     transform: rotate(8deg) translateX(100px);
     opacity: 0;
     transition: transform 0.5s ease, opacity 0.5s ease;
+  }
+  
+  .spotify-gradient {
+    background: linear-gradient(135deg, #1DB954 0%, #1DB954 40%, #191414 100%);
+  }
+  
+  .album-overlay {
+    @apply absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent;
+  }
+  
+  .player-bg {
+    @apply bg-gradient-to-t from-black to-transparent;
   }
 }
 
@@ -108,3 +120,4 @@
   opacity: 0;
   transition: opacity 300ms, transform 300ms;
 }
+
