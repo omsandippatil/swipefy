@@ -107,6 +107,16 @@ export default {
 						opacity: 1,
 						transform: 'translateX(0)'
 					}
+				},
+				'spin-slow': {
+					'0%': { transform: 'rotate(0deg)' },
+					'100%': { transform: 'rotate(360deg)' }
+				},
+				'ping': {
+					'75%, 100%': { 
+						transform: 'scale(2)',
+						opacity: 0
+					}
 				}
 			},
 			animation: {
@@ -115,7 +125,9 @@ export default {
 				'pulse-glow': 'pulse-glow 2s infinite',
 				'slide-up': 'slide-up 0.3s ease-out',
 				'slide-in-right': 'slide-in-right 0.3s ease-out',
-				'slide-in-left': 'slide-in-left 0.3s ease-out'
+				'slide-in-left': 'slide-in-left 0.3s ease-out',
+				'spin-slow': 'spin-slow 10s linear infinite',
+				'ping': 'ping 1.5s cubic-bezier(0, 0, 0.2, 1) infinite'
 			}
 		}
 	},

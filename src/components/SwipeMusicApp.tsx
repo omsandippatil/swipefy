@@ -1,5 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import SongCard from './SongCard';
 import MusicPlayer from './MusicPlayer';
 import { songs, Song } from '@/data/songs';
@@ -14,6 +15,7 @@ const SwipeMusicApp: React.FC = () => {
   const [transitionDirection, setTransitionDirection] = useState<'left' | 'right' | null>(null);
   const { toast } = useToast();
   const isMobile = useIsMobile();
+  const navigate = useNavigate();
   
   const currentSong = songs[currentIndex];
   
@@ -25,7 +27,8 @@ const SwipeMusicApp: React.FC = () => {
       toast({
         title: "Skipped",
         description: `"${currentSong.title}" by ${currentSong.artist}`,
-        variant: "destructive"
+        variant: "destructive",
+        className: "neo-blur border border-white/10",
       });
     }, 300);
   };
@@ -40,6 +43,7 @@ const SwipeMusicApp: React.FC = () => {
       toast({
         title: "Added to favorites",
         description: `"${currentSong.title}" by ${currentSong.artist}`,
+        className: "glass border border-white/10 bg-gradient-to-r from-primary/20 to-transparent",
       });
     }, 300);
   };
@@ -56,6 +60,22 @@ const SwipeMusicApp: React.FC = () => {
     setIsPlaying(!isPlaying);
   };
   
+  const handleNavigation = (path: string) => {
+    switch (path) {
+      case '/favorites':
+        navigate('/favorites', { state: { likedSongs } });
+        break;
+      case '/search':
+        navigate('/search');
+        break;
+      case '/now-playing':
+        navigate('/now-playing', { state: { currentSong, isPlaying } });
+        break;
+      default:
+        navigate(path);
+    }
+  };
+  
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-black flex flex-col">
       <header className="pt-4 pb-2 px-4 glass border-b border-white/10">
@@ -65,10 +85,16 @@ const SwipeMusicApp: React.FC = () => {
             <span className="text-white">fy</span>
           </h1>
           <div className="flex gap-4">
-            <button className="text-white/70 hover:text-primary transition-colors">
+            <button 
+              onClick={() => handleNavigation('/favorites')} 
+              className="text-white/70 hover:text-primary transition-colors"
+            >
               <Heart size={18} />
             </button>
-            <button className="text-white/70 hover:text-primary transition-colors">
+            <button 
+              onClick={() => handleNavigation('/now-playing')} 
+              className="text-white/70 hover:text-primary transition-colors"
+            >
               <User size={18} />
             </button>
           </div>
@@ -135,19 +161,31 @@ const SwipeMusicApp: React.FC = () => {
       {isMobile && (
         <nav className="fixed bottom-20 left-0 right-0 glass border-t border-white/10 py-2 px-4 z-10">
           <div className="flex justify-around items-center">
-            <button className="flex flex-col items-center text-white hover:text-primary transition-colors">
+            <button 
+              onClick={() => handleNavigation('/')}
+              className="flex flex-col items-center text-white hover:text-primary transition-colors"
+            >
               <Home size={18} />
               <span className="text-xs mt-0.5">Home</span>
             </button>
-            <button className="flex flex-col items-center text-white/70 hover:text-primary transition-colors">
+            <button 
+              onClick={() => handleNavigation('/search')}
+              className="flex flex-col items-center text-white/70 hover:text-primary transition-colors"
+            >
               <Search size={18} />
               <span className="text-xs mt-0.5">Search</span>
             </button>
-            <button className="flex flex-col items-center text-white/70 hover:text-primary transition-colors">
+            <button 
+              onClick={() => handleNavigation('/favorites')}
+              className="flex flex-col items-center text-white/70 hover:text-primary transition-colors"
+            >
               <Heart size={18} />
               <span className="text-xs mt-0.5">Liked</span>
             </button>
-            <button className="flex flex-col items-center text-white/70 hover:text-primary transition-colors">
+            <button 
+              onClick={() => handleNavigation('/now-playing')}
+              className="flex flex-col items-center text-white/70 hover:text-primary transition-colors"
+            >
               <Mic2 size={18} />
               <span className="text-xs mt-0.5">Now Playing</span>
             </button>
