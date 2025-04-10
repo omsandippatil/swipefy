@@ -56,6 +56,14 @@
     @apply bg-white/10 backdrop-blur-md;
   }
   
+  .neo-blur {
+    @apply backdrop-blur-2xl bg-black/40 border border-white/10;
+  }
+  
+  .text-gradient {
+    @apply bg-gradient-to-br from-white via-white/90 to-white/70 bg-clip-text text-transparent;
+  }
+  
   .swipe-indicator {
     @apply absolute top-1/2 transform -translate-y-1/2 p-4 rounded-full bg-white/20 backdrop-blur-lg text-white text-xl font-bold;
     opacity: 0;

@@ -2,7 +2,8 @@
 import React from 'react';
 import { Song } from '@/data/songs';
 import { formatTime } from '@/utils/formatTime';
-import { Heart, X } from 'lucide-react';
+import { Heart, X, Headphones } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 interface SongCardProps {
   song: Song;
@@ -82,7 +83,11 @@ const SongCard: React.FC<SongCardProps> = ({
   return (
     <div 
       ref={cardRef}
-      className={`w-full relative rounded-2xl overflow-hidden transition-all duration-300 ${className} ${isActive ? 'z-10' : 'z-0'}`}
+      className={cn(
+        'w-full relative rounded-3xl overflow-hidden transition-all duration-300 music-card-shadow',
+        className,
+        isActive ? 'z-10' : 'z-0'
+      )}
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
@@ -108,7 +113,7 @@ const SongCard: React.FC<SongCardProps> = ({
       </div>
       
       {/* Album artwork */}
-      <div className="w-full aspect-square bg-gray-900 overflow-hidden music-card-shadow">
+      <div className="w-full aspect-square bg-gray-900 overflow-hidden">
         <img 
           src={song.coverArt} 
           alt={`${song.title} cover`} 
@@ -117,10 +122,18 @@ const SongCard: React.FC<SongCardProps> = ({
       </div>
       
       {/* Song info */}
-      <div className="absolute bottom-0 left-0 right-0 p-6 glass">
-        <h2 className="text-2xl font-bold text-white mb-1 truncate">{song.title}</h2>
-        <p className="text-lg text-gray-300 mb-1">{song.artist}</p>
-        <div className="flex justify-between items-center mt-2 text-gray-400">
+      <div className="absolute bottom-0 left-0 right-0 p-6 neo-blur">
+        <div className="flex items-center justify-between">
+          <div>
+            <h2 className="text-xl font-bold text-white mb-1 truncate">{song.title}</h2>
+            <p className="text-base text-gray-300 mb-1">{song.artist}</p>
+          </div>
+          <div className="flex-shrink-0 bg-primary/20 rounded-full p-2">
+            <Headphones size={20} className="text-primary" />
+          </div>
+        </div>
+        
+        <div className="flex justify-between items-center mt-2 text-gray-400 text-sm">
           <span>{song.album}</span>
           <span>{formatTime(song.duration)}</span>
         </div>
@@ -131,14 +144,14 @@ const SongCard: React.FC<SongCardProps> = ({
         <div className="absolute bottom-36 left-0 right-0 flex justify-center space-x-12 py-4">
           <button 
             onClick={() => handleActionButton('left')}
-            className="bg-white/10 hover:bg-white/20 text-white p-4 rounded-full backdrop-blur-lg transition-colors"
+            className="glass hover:bg-white/20 text-white p-4 rounded-full transition-colors"
           >
             <X size={28} />
           </button>
           
           <button 
             onClick={() => handleActionButton('right')}
-            className="bg-white/10 hover:bg-white/20 text-accent p-4 rounded-full backdrop-blur-lg transition-colors"
+            className="glass hover:bg-white/20 text-accent p-4 rounded-full transition-colors"
           >
             <Heart size={28} />
           </button>
