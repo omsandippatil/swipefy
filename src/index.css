@@ -49,7 +49,7 @@
 
 @layer utilities {
   .music-card-shadow {
-    box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 8px 25px -5px rgba(0, 0, 0, 0.4);
   }
   
   .glass {
@@ -65,7 +65,7 @@
   }
   
   .swipe-indicator {
-    @apply absolute top-1/2 transform -translate-y-1/2 p-4 rounded-full bg-black/60 backdrop-blur-lg text-white text-xl font-bold;
+    @apply absolute top-1/2 transform -translate-y-1/2 p-3 rounded-full bg-black/60 backdrop-blur-lg text-white text-xl font-bold;
     opacity: 0;
     transition: opacity 0.2s ease-in-out;
   }

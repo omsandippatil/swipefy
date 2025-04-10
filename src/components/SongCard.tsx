@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Song } from '@/data/songs';
 import { formatTime } from '@/utils/formatTime';
@@ -37,7 +36,6 @@ const SongCard: React.FC<SongCardProps> = ({
     const diff = clientX - startX;
     setOffsetX(diff);
     
-    // Determine direction for visual indicators
     if (diff > 30) {
       setDirection('right');
     } else if (diff < -30) {
@@ -47,8 +45,7 @@ const SongCard: React.FC<SongCardProps> = ({
     }
     
     if (cardRef.current) {
-      // Apply rotation based on swipe distance
-      const rotate = diff * 0.05; // Adjust rotation sensitivity
+      const rotate = diff * 0.05;
       cardRef.current.style.transform = `translateX(${diff}px) rotate(${rotate}deg)`;
     }
   };
@@ -56,13 +53,11 @@ const SongCard: React.FC<SongCardProps> = ({
   const handleTouchEnd = () => {
     if (!isActive) return;
     
-    // If swiped far enough, trigger the appropriate action
     if (offsetX > 100) {
       onSwipeRight();
     } else if (offsetX < -100) {
       onSwipeLeft();
     } else {
-      // Reset to center if not swiped far enough
       if (cardRef.current) {
         cardRef.current.style.transform = 'translateX(0) rotate(0deg)';
       }
@@ -96,22 +91,20 @@ const SongCard: React.FC<SongCardProps> = ({
       onMouseUp={handleTouchEnd}
       onMouseLeave={handleTouchEnd}
     >
-      {/* Swipe indicators */}
       <div 
         className={`swipe-indicator left-4 ${direction === 'left' ? 'opacity-100' : ''}`}
         style={{ opacity: direction === 'left' ? Math.min(Math.abs(offsetX) / 100, 1) : 0 }}
       >
-        <X className="text-white" size={32} />
+        <X className="text-white" size={28} />
       </div>
       
       <div 
         className={`swipe-indicator right-4 ${direction === 'right' ? 'opacity-100' : ''}`}
         style={{ opacity: direction === 'right' ? Math.min(Math.abs(offsetX) / 100, 1) : 0 }}
       >
-        <Heart className="text-primary" fill="currentColor" size={32} />
+        <Heart className="text-primary" fill="currentColor" size={28} />
       </div>
       
-      {/* Album artwork */}
       <div className="w-full aspect-square bg-black overflow-hidden relative">
         <img 
           src={song.coverArt} 
@@ -120,24 +113,22 @@ const SongCard: React.FC<SongCardProps> = ({
         />
         <div className="album-overlay"></div>
         
-        {/* Spotify-like play button overlay */}
         {isActive && (
-          <div className="absolute bottom-6 right-6">
-            <div className="bg-primary rounded-full p-3 shadow-xl hover:scale-105 transition-transform">
-              <Play fill="black" size={24} className="text-black ml-0.5" />
+          <div className="absolute bottom-4 right-4">
+            <div className="bg-primary rounded-full p-2 shadow-xl hover:scale-105 transition-transform">
+              <Play fill="black" size={20} className="text-black ml-0.5" />
             </div>
           </div>
         )}
       </div>
       
-      {/* Song info */}
-      <div className="absolute bottom-0 left-0 right-0 p-5 neo-blur">
-        <div className="flex items-center justify-between mb-2">
+      <div className="absolute bottom-0 left-0 right-0 p-4 neo-blur">
+        <div className="flex items-center justify-between mb-1">
           <div className="flex-1 pr-4">
-            <h2 className="text-xl font-bold text-white mb-1 truncate">{song.title}</h2>
-            <p className="text-base text-gray-300 mb-1 truncate">{song.artist}</p>
-            <div className="flex items-center mt-1">
-              <Music3 size={14} className="text-primary mr-2" />
+            <h2 className="text-lg font-bold text-white mb-0.5 truncate">{song.title}</h2>
+            <p className="text-sm text-gray-300 mb-0.5 truncate">{song.artist}</p>
+            <div className="flex items-center mt-0.5">
+              <Music3 size={12} className="text-primary mr-1" />
               <span className="text-xs text-gray-400 truncate">{song.album}</span>
             </div>
           </div>
@@ -147,23 +138,22 @@ const SongCard: React.FC<SongCardProps> = ({
         </div>
       </div>
       
-      {/* Action buttons */}
       {isActive && (
-        <div className="absolute top-1/2 left-0 right-0 flex justify-center space-x-12 py-4">
+        <div className="absolute -bottom-16 left-0 right-0 flex justify-center space-x-8 py-2">
           <button 
             onClick={() => handleActionButton('left')}
-            className="glass hover:bg-white/10 text-white p-4 rounded-full transition-colors shadow-lg"
+            className="glass hover:bg-white/10 text-white p-2.5 rounded-full transition-colors shadow-lg"
             aria-label="Skip"
           >
-            <X size={28} />
+            <X size={22} />
           </button>
           
           <button 
             onClick={() => handleActionButton('right')}
-            className="glass hover:bg-white/10 text-primary p-4 rounded-full transition-colors shadow-lg"
+            className="glass hover:bg-white/10 text-primary p-2.5 rounded-full transition-colors shadow-lg"
             aria-label="Like"
           >
-            <Heart size={28} />
+            <Heart size={22} />
           </button>
         </div>
       )}
