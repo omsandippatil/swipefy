@@ -1,0 +1,296 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 220 10% 10%;
+    --foreground: 0 0% 98%;
+
+    --card: 220 10% 15%;
+    --card-foreground: 0 0% 98%;
+
+    --popover: 220 10% 15%;
+    --popover-foreground: 0 0% 98%;
+
+    --primary: 142 72% 50%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 220 10% 20%;
+    --secondary-foreground: 0 0% 98%;
+
+    --muted: 220 10% 20%;
+    --muted-foreground: 220 5% 65%;
+
+    --accent: 142 72% 50%;
+    --accent-foreground: 0 0% 98%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 220 10% 20%;
+    --input: 220 10% 20%;
+    --ring: 142 72% 60%;
+
+    --radius: 0.75rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-gradient-to-br from-background via-background to-black text-foreground overflow-hidden;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+@layer utilities {
+  .music-card-shadow {
+    box-shadow: 0 12px 30px -8px rgba(0, 0, 0, 0.6);
+  }
+  
+  .glass {
+    @apply bg-white/5 backdrop-blur-md border border-white/10;
+  }
+  
+  .glass-strong {
+    @apply bg-white/10 backdrop-blur-xl border border-white/15 shadow-xl;
+  }
+  
+  .neo-blur {
+    @apply backdrop-blur-2xl bg-black/50 border border-white/10;
+  }
+  
+  .text-gradient {
+    @apply bg-gradient-to-br from-primary to-primary/70 bg-clip-text text-transparent;
+  }
+  
+  .swipe-indicator {
+    @apply absolute top-1/2 transform -translate-y-1/2 p-3 rounded-full bg-black/60 backdrop-blur-lg text-white text-xl font-bold;
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+  }
+  
+  .card-rotate-left {
+    transform: rotate(-8deg) translateX(-100px);
+    opacity: 0;
+    transition: transform 0.5s ease, opacity 0.5s ease;
+  }
+  
+  .card-rotate-right {
+    transform: rotate(8deg) translateX(100px);
+    opacity: 0;
+    transition: transform 0.5s ease, opacity 0.5s ease;
+  }
+  
+  .spotify-gradient {
+    background: linear-gradient(135deg, #1DB954 0%, #1DB954 40%, #191414 100%);
+  }
+  
+  .album-overlay {
+    @apply absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent;
+  }
+  
+  .player-bg {
+    @apply bg-gradient-to-t from-black to-transparent;
+  }
+  
+  .frost-panel {
+    @apply backdrop-blur-lg bg-white/5 border border-white/15 shadow-lg;
+  }
+  
+  .glow {
+    box-shadow: 0 0 20px 2px rgba(46, 213, 115, 0.2);
+  }
+  
+  .glow-hover:hover {
+    box-shadow: 0 0 25px 3px rgba(46, 213, 115, 0.3);
+  }
+  
+  .depth-shadow {
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3), 0 8px 10px -6px rgba(0, 0, 0, 0.2);
+  }
+  
+  .grid-pattern {
+    background-image: radial-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+    background-size: 20px 20px;
+  }
+  
+  .subtle-glow {
+    box-shadow: 0 0 15px rgba(46, 213, 115, 0.15);
+  }
+  
+  .vinyl-container {
+    width: 200px;
+    height: 200px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .vinyl-disc {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    background: radial-gradient(circle at center, 
+      #111 0%, 
+      #333 40%, 
+      #111 40.5%, 
+      #333 41%, 
+      #111 41.5%, 
+      #333 42%, 
+      #111 42.5%, 
+      #333 43%, 
+      #111 43.5%, 
+      #333 44%, 
+      #111 44.5%, 
+      #333 45%,
+      #111 45.5%,
+      #333 46%,
+      #111 46.5%,
+      #333 47%,
+      #111 47.5%,
+      #333 48%,
+      #111 48.5%,
+      #222 100%);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  .vinyl-img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 55%;
+    height: 55%;
+    border-radius: 50%;
+    background-size: cover;
+    background-position: center;
+    opacity: 0.85;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    z-index: 2;
+  }
+  
+  .vinyl-label {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    background: radial-gradient(circle at center, #222 0%, #111 100%);
+    z-index: 1;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  .vinyl-hole {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #000;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    z-index: 3;
+  }
+  
+  .vinyl-grooves {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: repeating-radial-gradient(
+      circle at center,
+      transparent,
+      transparent 2px,
+      rgba(0, 0, 0, 0.3) 2.5px,
+      transparent 3px
+    );
+    opacity: 0.3;
+    z-index: 1;
+  }
+}
+
+.card-enter {
+  opacity: 0;
+  transform: scale(0.9) translateY(20px);
+}
+
+.card-enter-active {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+  transition: opacity 300ms, transform 300ms;
+}
+
+.card-exit {
+  opacity: 1;
+  transform: scale(1);
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  pointer-events: none;
+}
+
+.card-exit-active {
+  opacity: 0;
+  transition: opacity 300ms, transform 300ms;
+}
+
+.hover-scale {
+  transition: transform 0.2s ease;
+}
+
+.hover-scale:hover {
+  transform: scale(1.05);
+}
+
+.pulse-subtle {
+  animation: pulse-subtle 2s ease-in-out infinite;
+}
+
+@keyframes pulse-subtle {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.85;
+    transform: scale(1.03);
+  }
+}
+
+.floating {
+  animation: floating 3s ease-in-out infinite;
+}
+
+@keyframes floating {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin-slow {
+  animation: spin 4s linear infinite;
+}
